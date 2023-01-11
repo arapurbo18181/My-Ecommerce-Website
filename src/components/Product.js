@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { useProduct } from "../contexts/ProductContext";
 import { Link } from "react-router-dom";
 import { BsPlus, BsEyeFill } from "react-icons/bs";
 import { useCart } from "../contexts/CartContext";
+import { useFirebase } from "../contexts/FirebaseContext";
+import { useEffect } from "react";
 
 const Product = ({ ...item }) => {
-  const { id, title, price, description, category, image } = item;
+  const { id, title, price,  category, imageURL } = item;
   const {addToCart} = useCart();
+  const {User, getImageUrl} = useFirebase();
+  const [Url, setUrl] = useState()
+
+  useEffect(() => {
+    getImageUrl(imageURL).then(url=>setUrl(url));
+  }, []);
+  
+
+  const addCart = () =>{
+    
+    if (User) {
+      addToCart(item)
+    }else{
+      alert("Please Login first.....")
+    }
+    
+  }
 
   return (
     <div>
@@ -15,13 +34,13 @@ const Product = ({ ...item }) => {
           <div className="w-[200px] mx-auto flex justify-center items-center">
             <img
               className="max-h-160px group-hover:scale-110 transition duration-300"
-              src={image}
+              src={Url}
               alt=""
             />
           </div>
         </div>
         <div className="absolute top-6 -right-11 group-hover:right-5 p-2 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <button onClick={()=>addToCart(item)}>
+          <button onClick={addCart}>
             <div className="flex justify-center items-center text-white h-12 w-12 bg-red-500">
               <BsPlus className="text-3xl" />
             </div>

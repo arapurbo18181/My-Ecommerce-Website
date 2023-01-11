@@ -1,22 +1,26 @@
 import React from 'react';
 import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
-import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
 import { Route, Routes } from 'react-router-dom';
+import AllProducts from './pages/AllProducts';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import AdminPanel from './pages/AdminPanel';
 
 const App = () => {
   return(
 
   <div className='overflow-hidden'>
-    <Header/>
     <Routes>
       <Route path='/' element={<Home/>} />
+      <Route path='/products' element={<AllProducts/>} />
+      <Route path='/login' element={<Login/>} />
+      <Route path='/signup' element={<SignUp/>} />
       <Route path='/product/:id' element={<ProductDetails/>} />
+      <Route path='/admin' element={<AdminPanel/>} />
     </Routes>
     <Sidebar/>
-    <Footer/>
   </div>
   ) 
 };

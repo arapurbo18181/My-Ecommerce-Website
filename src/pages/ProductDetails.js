@@ -1,12 +1,24 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
+import { useFirebase } from "../contexts/FirebaseContext";
 import { useProduct } from "../contexts/ProductContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { AllProducts } = useProduct();
   const { addToCart } = useCart();
+  const {User} = useFirebase();
+
+  const addCart = () =>{
+    
+    if (User) {
+      addToCart(product)
+    }else{
+      alert("Please Login first.....")
+    }
+    
+  }
 
   const product = AllProducts.find((item) => {
     return item.id === parseInt(id);
@@ -35,7 +47,7 @@ const ProductDetails = () => {
              $ {price}
             </div>
             <p className="mb-8"> {description} </p>
-            <button onClick={()=>addToCart(product)} className="bg-primary py-4 px-8 text-white">Add to cart</button>
+            <button onClick={addCart} className="bg-primary py-4 px-8 text-white">Add to cart</button>
           </div>
         </div>
       </div>
