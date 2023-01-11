@@ -15,12 +15,6 @@ const Home = () => {
     getProducts().then(item=>setMyProduct(item.docs));
   }, [getProducts]);
 
-  // const filterData = MyProduct.filter(item=>{
-  //   return item.data().category === "men's clothing" || item.data().category === "women's clothing";
-  // });
-
-  // console.log(filterData)
-
 
   return (
     <div>

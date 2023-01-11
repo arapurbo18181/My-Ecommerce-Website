@@ -7,7 +7,7 @@ import { useSidebar } from '../contexts/SidebarContext';
 import { useCart } from '../contexts/CartContext';
 
 const Sidebar = () => {
-  const {Cart, addToCart, clearCart, Total, ItemAmount} = useCart();
+  const {Cart, clearCart, Total, ItemAmount} = useCart();
   const {IsOpen,  handleClose} = useSidebar();
 
   return(

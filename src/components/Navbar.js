@@ -8,7 +8,7 @@ const Navbar = () => {
     return (
       <div className="flex gap-x-5">
         <Link to={"/"}>Home</Link>
-        <Link to={"/products"}>All Products</Link>
+        {/* <Link to={"/products"}>All Products</Link> */}
         <button onClick={logOut} >Logout</button>
         <div className="font-bold">
              Welcome, {User.email}
@@ -19,7 +19,7 @@ const Navbar = () => {
     return (
       <div className="flex gap-x-5">
         <Link to={"/"}>Home</Link>
-        <Link to={"/products"}>All Products</Link>
+        {/* <Link to={"/products"}>All Products</Link> */}
         <Link to={"/login"}>Login</Link>
         <Link to={"/signup"}>Sign Up</Link>
       </div>
