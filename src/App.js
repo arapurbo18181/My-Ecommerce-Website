@@ -7,6 +7,8 @@ import AllProducts from './pages/AllProducts';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import AdminPanel from './pages/AdminPanel';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 const App = () => {
   return(
@@ -19,6 +21,8 @@ const App = () => {
       <Route path='/signup' element={<SignUp/>} />
       <Route path='/product/:id' element={<ProductDetails/>} />
       <Route path='/admin' element={<AdminPanel/>} />
+      <Route path='/cart' element={<Cart/>} />
+      <Route path='/checkout' element={<Checkout/>} />
     </Routes>
     <Sidebar/>
   </div>
