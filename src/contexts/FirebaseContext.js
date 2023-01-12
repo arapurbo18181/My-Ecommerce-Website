@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -26,6 +26,7 @@ const firebaseConfig = {
   const auth = getAuth(app);
   const db = getFirestore(app);
   const storage = getStorage(app);
+  const provider = new GoogleAuthProvider();
 
 
 
@@ -78,11 +79,15 @@ export const FirebaseProvider = (props)=> {
       const getImageUrl = (path) =>{
         return getDownloadURL(ref(storage,path));
       }
+
+      const loginWithGoogle = () => {
+        return signInWithPopup(auth, provider)
+      }
       
 
 
     return (
-        <FirebaseContext.Provider value={{signUpWithEmailAndPassword, loginWithEmailAndPassword, logOut, addProduct, getProducts, getImageUrl, User}}>
+        <FirebaseContext.Provider value={{signUpWithEmailAndPassword, loginWithEmailAndPassword, logOut, addProduct, getProducts, getImageUrl, loginWithGoogle, User}}>
             {props.children}
         </FirebaseContext.Provider>
     )

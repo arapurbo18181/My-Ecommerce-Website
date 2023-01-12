@@ -10,8 +10,7 @@ const Product = ({ ...item }) => {
   const { id, title, price,  category, imageURL } = item;
   const {addToCart} = useCart();
   const {User, getImageUrl} = useFirebase();
-  const [Url, setUrl] = useState()
-  const [Items, setItems] = useState();
+  const [Url, setUrl] = useState();
 
   useEffect(() => {
     getImageUrl(imageURL).then(url=>setUrl(url));

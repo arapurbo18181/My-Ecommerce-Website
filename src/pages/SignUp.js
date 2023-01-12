@@ -5,15 +5,16 @@ import { useFirebase } from '../contexts/FirebaseContext';
 
 const SignUp = () => {
     const [Name, setName] = useState();
+    const [UserName, setUserName] = useState();
     const [Email, setEmail] = useState();
     const [Password, setPassword] = useState();
     const navigate = useNavigate();
 
-    const {signUpWithEmailAndPassword, User} = useFirebase();
-
+    const {signUpWithEmailAndPassword, loginWithGoogle, User} = useFirebase();
     const signUp = async (e) =>{
         e.preventDefault();
         await signUpWithEmailAndPassword(Email,Password);
+        setUserName(Name);
         setEmail("");
         setName("");
         setPassword("");
@@ -22,6 +23,7 @@ const SignUp = () => {
     
     useEffect(() => {
         if (User) {
+          User.displayName = UserName;
             navigate("/")
         }
     }, [User, navigate])
@@ -77,7 +79,7 @@ const SignUp = () => {
             <div className="h-[1px] w-1/4 bg-gray-300 mt-3"></div>
           </div>
           <div className="flex justify-center items-center mt-4">
-            <AiFillGooglePlusCircle className="text-4xl text-red-500 hover:text-red-600 cursor-pointer" />
+            <AiFillGooglePlusCircle onClick={loginWithGoogle} className="text-4xl text-red-500 hover:text-red-600 cursor-pointer" />
           </div>
         </div>
       </form>

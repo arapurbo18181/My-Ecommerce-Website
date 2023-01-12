@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useFirebase } from "../contexts/FirebaseContext";
 
 const Login = () => {
-    const {loginWithEmailAndPassword, User} = useFirebase();
+    const {loginWithEmailAndPassword, loginWithGoogle, User} = useFirebase();
 
     const [Email, setEmail] = useState();
     const [Password, setPassword] = useState();
@@ -70,7 +70,7 @@ const Login = () => {
             <div className="h-[1px] w-1/4 bg-gray-300 mt-3"></div>
           </div>
           <div className="flex justify-center items-center mt-4">
-            <AiFillGooglePlusCircle className="text-4xl text-red-500 hover:text-red-600 cursor-pointer" />
+            <AiFillGooglePlusCircle onClick={loginWithGoogle} className="text-4xl text-red-500 hover:text-red-600 cursor-pointer" />
           </div>
         </div>
       </form>
