@@ -17,6 +17,12 @@ const Navbar = () => {
   const logOutAndToggle = () =>{
     logOut();
     toggle();
+    alert(`You Are Logged Out`)
+  }
+
+  const handleLogout = () =>{
+    logOut();
+    alert(`You Are Logged Out`);
   }
 
   if (User) {
@@ -24,7 +30,7 @@ const Navbar = () => {
       <>
         <div className="gap-x-5 hidden lg:flex">
           <Link to={"/"}>Home</Link>
-          <button onClick={logOut}>Logout</button>
+          <button onClick={handleLogout}>Logout</button>
           <div className="font-bold">Welcome, {User.displayName}</div>
         </div>
         <div className="block lg:hidden">

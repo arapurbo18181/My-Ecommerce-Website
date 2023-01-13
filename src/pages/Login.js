@@ -23,6 +23,7 @@ const Login = () => {
     useEffect(() => {
         if (User) {
             navigate("/")
+            alert(`Welcome ${User.email}`)
         }
     }, [User, navigate])
     

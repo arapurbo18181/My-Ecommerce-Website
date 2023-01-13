@@ -25,6 +25,7 @@ const SignUp = () => {
         if (User) {
           User.displayName = UserName;
             navigate("/")
+            alert(`Welcome ${User.email}`)
         }
     }, [User, navigate])
 
