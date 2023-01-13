@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, signInWithRedirect  } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -40,7 +40,7 @@ export const FirebaseProvider = (props)=> {
       }
     
       const loginWithEmailAndPassword = (email, passsword) => {
-        signInWithEmailAndPassword(auth, email, passsword).catch(err=>alert(err));
+        return signInWithEmailAndPassword(auth, email, passsword).catch(err=>alert(err));
       }
 
       const logOut = () =>{
@@ -94,7 +94,7 @@ export const FirebaseProvider = (props)=> {
       }
 
       const loginWithGoogle = () => {
-        return signInWithPopup(auth, provider)
+        signInWithPopup(auth, provider);
       }
       
 
