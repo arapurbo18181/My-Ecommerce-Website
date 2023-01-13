@@ -8,10 +8,10 @@ const ProductDetails = () => {
   const { addToCart } = useCart();
   const { User, getProducts, getImageUrl } = useFirebase();
   const [Url, setUrl] = useState();
-  const [OneProduct, setOneProduct] = useState()
+  const [OneProduct, setOneProduct] = useState();
 
   const [MyProduct, setMyProduct] = useState([]);
-
+  console.log(User);
   useEffect(() => {
     getProducts().then((item) => setMyProduct(item.docs.map(elem=>{
       return elem.data();

@@ -33,7 +33,7 @@ const Navbar = () => {
         <div
           className={`h-screen w-screen fixed ${
             ToggleMenu ? "right-0" : "-right-full"
-          } transition-all duration-500 top-0 text-black flex flex-col z-20`}
+          } transition-all duration-500 top-0 text-black bg-white flex flex-col z-20`}
         >
           <div className="flex flex-col justify-center items-start w-full h-full relative px-4 text-2xl gap-y-4">
             <div className="absolute top-2 right-2">

@@ -11,13 +11,13 @@ const Cart = () => {
       <div className="mb-4 underline mt-16">
         <h1 className="text-3xl font-bold">Your Cart</h1>
       </div>
-      <div className="w-full px-0 lg:px-40">
+      <div className="w-full px-7 lg:px-40">
         <div className="flex justify-between items-center bg-red-500 text-white px-4 rounded py-2 my-4">
           <div>Product</div>
           <div>Quantity</div>
           <div>Subtotal</div>
         </div>
-        <div className="flex flex-col gap-y-2 h-[400px] justify-between overflow-y-auto overflow-x-hidden">
+        <div className="flex flex-col gap-y-2 h-[380px] justify-between overflow-y-auto overflow-x-hidden">
           {Cart.map((item) => {
             return <CartItemForViewCart {...item} key={item.id} />;
           })}
@@ -37,7 +37,7 @@ const Cart = () => {
         </div>
       </div>
       <div className="my-4">
-      <Link to={"/checkout"} className="bg-primary flex p-4 justify-center items-center text-white w-full font-medium">Checkout</Link>
+      <Link to={"/checkout"} className="bg-primary flex p-4 justify-center items-center text-white w-full font-medium">Place Order</Link>
       </div>
     </section>
   );

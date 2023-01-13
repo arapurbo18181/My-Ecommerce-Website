@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useEffect } from "react";
@@ -72,6 +72,19 @@ export const FirebaseProvider = (props)=> {
         });
       }
 
+      const tryProduct = async () =>{
+        // return await addDoc(collection(db, `orders/${User.displayName}/`),{
+        //   id: 20,
+        //   name: "apurbo"
+        // });
+        return await setDoc(doc(db, "orders", `${User.email}`), {
+          name: "Los Angeles",
+          state: "CA",
+          country: "USA",
+          id: [1,2,3,4,5,6]
+        });
+      }
+
       const getProducts = () =>{
         return getDocs(collection(db, "products"));
       }
@@ -87,7 +100,7 @@ export const FirebaseProvider = (props)=> {
 
 
     return (
-        <FirebaseContext.Provider value={{signUpWithEmailAndPassword, loginWithEmailAndPassword, logOut, addProduct, getProducts, getImageUrl, loginWithGoogle, User}}>
+        <FirebaseContext.Provider value={{signUpWithEmailAndPassword, loginWithEmailAndPassword, logOut, addProduct, getProducts, getImageUrl, loginWithGoogle, tryProduct, User}}>
             {props.children}
         </FirebaseContext.Provider>
     )
