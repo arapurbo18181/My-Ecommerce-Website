@@ -2,34 +2,42 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
 import { useFirebase } from "../contexts/FirebaseContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetails = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const { addToCart } = useCart();
-  const { User, getProducts, getImageUrl } = useFirebase();
+  const { User, getProducts, getImageUrl, updateAmount } = useFirebase();
   const [Url, setUrl] = useState();
   const [OneProduct, setOneProduct] = useState();
 
   const [MyProduct, setMyProduct] = useState([]);
-  console.log(User);
-  useEffect(() => {
-    getProducts().then((item) => setMyProduct(item.docs.map(elem=>{
-      return elem.data();
-    })));
-  }, []);
   
+  useEffect(() => {
+    getProducts().then((item) =>
+      setMyProduct(
+        item.docs.map((elem) => {
+          return elem.data();
+        })
+      )
+    );
+  }, []);
 
-useEffect(() => {
-  setOneProduct(MyProduct.find((item) => {
-    return item.id === parseInt(id);
-  }))
-}, [MyProduct])
+  useEffect(() => {
+    setOneProduct(
+      MyProduct.find((item) => {
+        return item.id === parseInt(id);
+      })
+    );
+  }, [MyProduct]);
 
   const addCart = () => {
     if (User) {
+      updateAmount()
       addToCart(OneProduct);
     } else {
-      alert("Please Login first.....");
+      toast("Please Login first.....");
     }
   };
 
@@ -40,7 +48,7 @@ useEffect(() => {
       </section>
     );
   } else {
-    getImageUrl(OneProduct.imageURL).then(url=>setUrl(url));
+    getImageUrl(OneProduct.imageURL).then((url) => setUrl(url));
     return (
       <section className="pt-32 pb-12 lg:py-32 h-screen flex items-center">
         <div className="container mx-auto">
@@ -52,7 +60,9 @@ useEffect(() => {
               <h1 className="text-[26px] font-medium mb-2 max-w-[450px] mx-auto lg:mx-0">
                 {OneProduct.title}
               </h1>
-              <div className="text-xl text-red-500 font-medium mb-6">$ {OneProduct.price}</div>
+              <div className="text-xl text-red-500 font-medium mb-6">
+                $ {OneProduct.price}
+              </div>
               <p className="mb-8"> {OneProduct.description} </p>
               <button
                 onClick={addCart}
@@ -63,6 +73,18 @@ useEffect(() => {
             </div>
           </div>
         </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+          theme="dark"
+        />
       </section>
     );
   }

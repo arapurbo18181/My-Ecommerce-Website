@@ -7,18 +7,14 @@ import Logo from "../img/logo.svg";
 import { useState } from "react";
 import Navbar from "./Navbar";
 import { useFirebase } from "../contexts/FirebaseContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
   const [IsActive, setIsActive] = useState(false);
   const { IsOpen, setIsOpen, handleClose } = useSidebar();
   const { User } = useFirebase();
   const {
-    Cart,
-    addToCart,
-    removeFromCart,
-    clearCart,
-    increaseAmount,
-    decreaseAmount,
     ItemAmount,
   } = useCart();
 
@@ -32,7 +28,7 @@ const Header = () => {
     if (User) {
       setIsOpen(!IsOpen);
     } else {
-      alert("Please Login first.....");
+      toast("Please Login first.....");
     }
   };
 
@@ -66,6 +62,18 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </header>
   );
 };

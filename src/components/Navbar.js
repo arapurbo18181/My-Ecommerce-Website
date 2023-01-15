@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useFirebase } from "../contexts/FirebaseContext";
 import { FaBars } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const { User, logOut } = useFirebase();
@@ -14,16 +16,16 @@ const Navbar = () => {
     setToggleMenu(!ToggleMenu);
   };
 
-  const logOutAndToggle = () =>{
+  const logOutAndToggle = () => {
     logOut();
     toggle();
-    alert(`You Are Logged Out`)
-  }
+    toast("You Are Logged Out");
+  };
 
-  const handleLogout = () =>{
+  const handleLogout = () => {
     logOut();
-    alert(`You Are Logged Out`);
-  }
+    toast("You Are Logged Out");
+  };
 
   if (User) {
     return (
@@ -45,8 +47,19 @@ const Navbar = () => {
             <div className="absolute top-2 right-2">
               <IoMdClose onClick={toggle} className="text-2xl" />
             </div>
-            <Link onClick={toggle} className="border-b bg-white border-black pb-1" to={"/"}>Home</Link>
-            <button className="border-b border-black pb-1" onClick={logOutAndToggle}>Logout</button>
+            <Link
+              onClick={toggle}
+              className="border-b bg-white border-black pb-1"
+              to={"/"}
+            >
+              Home
+            </Link>
+            <button
+              className="border-b border-black pb-1"
+              onClick={logOutAndToggle}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </>
@@ -54,12 +67,12 @@ const Navbar = () => {
   } else {
     return (
       <>
-      <div className="gap-x-5 hidden lg:flex">
-        <Link to={"/"}>Home</Link>
-        <Link to={"/login"}>Login</Link>
-        <Link to={"/signup"}>Sign Up</Link>
-      </div>
-      <div className="block lg:hidden">
+        <div className="gap-x-5 hidden lg:flex">
+          <Link to={"/"}>Home</Link>
+          <Link to={"/login"}>Login</Link>
+          <Link to={"/signup"}>Sign Up</Link>
+        </div>
+        <div className="block lg:hidden">
           <FaBars onClick={toggle} className="text-2xl" />
         </div>
         <div
@@ -71,11 +84,41 @@ const Navbar = () => {
             <div className="absolute top-2 right-2">
               <IoMdClose onClick={toggle} className="text-2xl" />
             </div>
-            <Link onClick={toggle} className="border-b border-black pb-1" to={"/"}>Home</Link>
-            <Link onClick={toggle} to={"/login"} className="border-b border-black pb-1">Login</Link>
-            <Link onClick={toggle} to={"/signup"} className="border-b border-black pb-1">Sign Up</Link>
+            <Link
+              onClick={toggle}
+              className="border-b border-black pb-1"
+              to={"/"}
+            >
+              Home
+            </Link>
+            <Link
+              onClick={toggle}
+              to={"/login"}
+              className="border-b border-black pb-1"
+            >
+              Login
+            </Link>
+            <Link
+              onClick={toggle}
+              to={"/signup"}
+              className="border-b border-black pb-1"
+            >
+              Sign Up
+            </Link>
           </div>
         </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
       </>
     );
   }
