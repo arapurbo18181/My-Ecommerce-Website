@@ -12,12 +12,12 @@ import { useState } from 'react';
 const Sidebar = () => {
   const {Cart, clearCart, Total, ItemAmount, Data, setData} = useCart();
   const {IsOpen,  handleClose} = useSidebar();
-  const {getProductsForCart, getProductById, getItems, CartItems} = useFirebase();
+  const {getProductsForCart, getProductById, getItems, CartItems, deleteAllDocs} = useFirebase();
   const [Items, setItems] = useState([]);
 
   useEffect(() => {
     getProductsForCart()
-  }, []);
+  },[]);
 
   return(
     <div className={` ${IsOpen ? "right-0" : "-right-full"} w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] xl:max-w-[30vw] transition-all duration-500 z-20 px-4 lg:px-[35px]`}>
@@ -32,7 +32,7 @@ const Sidebar = () => {
       <div className='flex flex-col gap-y-2 h-[430px] lg:h-640px overflow-y-auto overflow-x-hidden border-b'>
         {CartItems.map((item)=>{
           return(
-            <CartItem {...item} key={item.id} />
+            <CartItem {...item} key={item.ProductId} />
           )
         })}
        </div>
@@ -41,7 +41,7 @@ const Sidebar = () => {
           <div className='uppercase font-semibold'>
             <span className='mr-2'> Total: </span> $ {parseFloat(Total).toFixed(2)}
           </div>
-          <div onClick={clearCart} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
+          <div onClick={deleteAllDocs} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
             <FiTrash2/>
           </div>
         </div>

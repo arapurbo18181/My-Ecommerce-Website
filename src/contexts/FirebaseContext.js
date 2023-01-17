@@ -80,11 +80,11 @@ export const FirebaseProvider = (props) => {
     });
   }, []);
 
-  const addProduct = async (id, title, price, description, category, image) => {
+  const addProduct = async (ProductId, title, price, description, category, image) => {
     const imageRef = ref(storage, `uploads/images/${Date.now()}${image.name}`);
     const uploadImage = await uploadBytes(imageRef, image);
     return await addDoc(collection(db, "products"), {
-      id: Number(id),
+      ProductId: Number(ProductId),
       title,
       price: Number(price),
       description,
@@ -94,9 +94,9 @@ export const FirebaseProvider = (props) => {
   };
 
   const addProductForCart = async (product) => {
-    const { amount, id, category, description, email, imageURL, price, title } = product;
-    return await setDoc(doc(db, `orders/${id}`), {
-      id: Number(id),
+    const { amount, ProductId, category, description, email, imageURL, price, title } = product;
+    return await setDoc(doc(db, `${User.email}/${ProductId}`), {
+      ProductId: Number(ProductId),
       amount: Number(amount),
       category,
       description,
@@ -108,8 +108,10 @@ export const FirebaseProvider = (props) => {
   };
 
   const plusAmount = async (product) => {
-    const {id} = product
-    await updateDoc(doc(db, `orders/${id}`), {
+    // const { amount, ProductId, category, description, email, imageURL, price, title } = product;
+    // const q = query(collection(db, "orders"), where("email" && "ProductId", "==", User.email && ProductId ));
+    const {ProductId} = product
+     await updateDoc( doc(db, `${User.email}/${ProductId}` ) , {
       amount: increment(1),
     });
   };
@@ -120,11 +122,11 @@ export const FirebaseProvider = (props) => {
   }
 
   const minusAmount = async (product) => {
-    const { id, amount } = product;
+    const { amount, ProductId } = product;
     if (amount < 2) {
-      removeProductFromCart(product);
+
     } else {
-      await updateDoc(doc(db, `orders/${id}`), {
+      await updateDoc(doc(db, `${User.email}/${ProductId}` ), {
         amount: increment(-1),
       });
     }
@@ -135,12 +137,17 @@ export const FirebaseProvider = (props) => {
   };
 
   const getProductsForCart = () => {
-    onSnapshot(collection(db, "orders"),(querySnapshot)=>{
+    // const q = query(collection(db, "orders"), where("email", "==", User.email));
+    // console.log(q)
+    onSnapshot(collection(db, `${User.email}`),(querySnapshot)=>{
+      // console.log(querySnapshot);
       const items = [];
       querySnapshot.forEach((doc)=>{
         items.push(doc.data());
+        // console.log(doc.data())
       })
       setCartItems(items);
+      // console.log(items);
     })
   };
 
@@ -152,6 +159,13 @@ export const FirebaseProvider = (props) => {
     signInWithPopup(auth, provider);
   };
 
+  const deleteAllDocs = async ()=> {
+    const data = await getDocs(collection(db, `${User.email}`)).then(item=>item)
+    data.docs.map(item=>{
+      deleteDoc(doc(db, `${User.email}/${item.data().ProductId}`));
+    })
+  }
+
   const getProductById = async (id) => {
     const collectionRef = collection(db, "products");
     const q = query(collectionRef, where("id", "==", id));
@@ -161,8 +175,9 @@ export const FirebaseProvider = (props) => {
   };
 
   const removeProductFromCart = async (product) => {
-    const { id } = product;
-    await deleteDoc(doc(db, `orders/${id}`));
+    const { ProductId } = product;
+    await deleteDoc(doc(db, `${User.email}/${ProductId}`));
+    getProductsForCart()
   };
 
   const getItems = (product) =>{
@@ -193,6 +208,7 @@ export const FirebaseProvider = (props) => {
         removeProductFromCart,
         getDocument,
         getItems,
+        deleteAllDocs,
         CartItems,
         User,
       }}

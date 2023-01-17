@@ -61,7 +61,7 @@ export const CartProvider = (props) => {
   const addToCart = (product) =>{
     const newItem = {...product, amount: 1, email: User.email};
     const cartItem = MyProduct.find(item => {
-      return item.id === product.id;
+      return item.ProductId === product.ProductId;
     });
     if (cartItem) {
       // const newCart = [...Cart].map((item)=>{

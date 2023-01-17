@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CartItemForViewCart from "../components/CartItemForViewCart";
 import { useCart } from "../contexts/CartContext";
 import {FiTrash2} from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useFirebase } from "../contexts/FirebaseContext";
 
 const Cart = () => {
   const { Cart, Total, clearCart } = useCart();
+  const {CartItems, getProductsForCart, deleteAllDocs} = useFirebase();
+
+  useEffect(() => {
+    getProductsForCart()
+  },[]);
+
   return (
     <section className="h-screen w-screen flex flex-col justify-center items-center">
       <div className="mb-4 underline mt-16">
@@ -18,8 +25,8 @@ const Cart = () => {
           <div>Subtotal</div>
         </div>
         <div className="flex flex-col gap-y-2 h-[380px] justify-between overflow-y-auto overflow-x-hidden">
-          {Cart.map((item) => {
-            return <CartItemForViewCart {...item} key={item.id} />;
+          {CartItems.map((item) => {
+            return <CartItemForViewCart {...item} key={item.ProductId} />;
           })}
 
           
@@ -31,7 +38,7 @@ const Cart = () => {
           <div className='uppercase font-semibold'>
             <span className='mr-2'> Total: </span> $ {parseFloat(Total).toFixed(2)}
           </div>
-          <div onClick={clearCart} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
+          <div onClick={deleteAllDocs} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
             <FiTrash2/>
           </div>
         </div>

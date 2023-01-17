@@ -11,16 +11,21 @@ import "react-toastify/dist/ReactToastify.css";
 const Product = ({ ...item }) => {
   const { id, title, price, category, imageURL } = item;
   const { addToCart } = useCart();
-  const { User, getImageUrl } = useFirebase();
+  const { User, getImageUrl, getProductsForCart } = useFirebase();
   const [Url, setUrl] = useState();
 
   useEffect(() => {
     getImageUrl(imageURL).then((url) => setUrl(url));
   }, []);
 
+  useEffect(() => {
+    getProductsForCart()
+  }, []);
+
   const addCart = () => {
     if (User) {
       addToCart(item);
+      getProductsForCart()
     } else {
       toast("Please Login first.....");
     }

@@ -54,12 +54,14 @@ const Header = () => {
 
         <div className="cursor-pointer flex relative justify-center items-center gap-x-5">
           <Navbar />
-          <div onClick={openCart}>
+          {
+            User ? <div onClick={openCart}>
             <BsBag onClick={openCart} className="text-2xl" />
             <div className="bg-red-500 absolute -right-2 -bottom-2 text-[12px] w-[18px] h-[18px] text-white rounded-full flex justify-center items-center">
               {ItemAmount}
             </div>
-          </div>
+          </div> : ""
+          }
         </div>
       </div>
       <ToastContainer
