@@ -8,26 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
-  const { User, getProducts, getImageUrl, updateAmount } = useFirebase();
+  const { User, getImageUrl, updateAmount, MyProduct } = useFirebase();
   const [Url, setUrl] = useState();
   const [OneProduct, setOneProduct] = useState();
-
-  const [MyProduct, setMyProduct] = useState([]);
-  
-  useEffect(() => {
-    getProducts().then((item) =>
-      setMyProduct(
-        item.docs.map((elem) => {
-          return elem.data();
-        })
-      )
-    );
-  }, []);
 
   useEffect(() => {
     setOneProduct(
       MyProduct.find((item) => {
-        return item.id === parseInt(id);
+        return item.ProductId === parseInt(id);
       })
     );
   }, [MyProduct]);

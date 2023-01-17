@@ -53,6 +53,7 @@ export const FirebaseProvider = (props) => {
   const [User, setUser] = useState(false);
   const [Url, setUrl] = useState();
   const [CartItems, setCartItems] = useState([])
+  const [MyProduct, setMyProduct] = useState([])
 
   const signUpWithEmailAndPassword = async (email, passsword) => {
     await createUserWithEmailAndPassword(auth, email, passsword).catch((err) =>
@@ -136,6 +137,16 @@ export const FirebaseProvider = (props) => {
     return getDocs(collection(db, "products"));
   };
 
+  const getAllProducts = () =>{
+    getProducts().then((item) =>
+      setMyProduct(
+        item.docs.map((elem) => {
+          return elem.data();
+        })
+      )
+    );
+  }
+
   const getProductsForCart = () => {
     // const q = query(collection(db, "orders"), where("email", "==", User.email));
     // console.log(q)
@@ -209,6 +220,9 @@ export const FirebaseProvider = (props) => {
         getDocument,
         getItems,
         deleteAllDocs,
+        getAllProducts,
+        MyProduct,
+        setMyProduct,
         CartItems,
         User,
       }}

@@ -6,13 +6,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const Home = () => {
-  const { getProducts } = useFirebase();
-
-  const [MyProduct, setMyProduct] = useState([]);
+  const { getAllProducts, MyProduct } = useFirebase();
 
   useEffect(() => {
-    getProducts().then((item) => setMyProduct(item.docs));
-  }, [getProducts]);
+    getAllProducts();
+  }, [MyProduct]);
 
   return (
     <div>
@@ -21,7 +19,7 @@ const Home = () => {
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-w-sm mx-auto md:max-w-none md:mx-0">
             {MyProduct.map((item) => {
-              return <Product key={item.id} {...item.data()} />;
+              return <Product key={item.id} {...item} />;
             })}
           </div>
         </div>

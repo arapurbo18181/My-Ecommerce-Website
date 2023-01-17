@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Product = ({ ...item }) => {
-  const { id, title, price, category, imageURL } = item;
+  const { ProductId, title, price, category, imageURL } = item;
   const { addToCart } = useCart();
   const { User, getImageUrl, getProductsForCart } = useFirebase();
   const [Url, setUrl] = useState();
@@ -57,7 +57,7 @@ const Product = ({ ...item }) => {
               </div>
             </button>
             <Link
-              to={`/product/${id}`}
+              to={`/product/${ProductId}`}
               className="w-12 h-12 bg-white flex justify-center items-center text-primary drop-shadow-xl"
             >
               <BsEyeFill className="" />
@@ -68,7 +68,7 @@ const Product = ({ ...item }) => {
           <div className="text-sm capitalize text-gray-500 mb-1">
             {category}
           </div>
-          <Link to={`/product/${id}`}>
+          <Link to={`/product/${ProductId}`}>
             <h2 className="font-semibold mb-1">{title}</h2>
           </Link>
           <div className="font-semibold">$ {price}</div>
