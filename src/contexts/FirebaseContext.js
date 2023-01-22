@@ -35,12 +35,12 @@ const FirebaseContext = createContext();
 export const useFirebase = () => useContext(FirebaseContext);
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDgNqiAv2XhDiPyBRVhULsuCabDC-x8eYo",
-  authDomain: "ecommerce-29f43.firebaseapp.com",
-  projectId: "ecommerce-29f43",
-  storageBucket: "ecommerce-29f43.appspot.com",
-  messagingSenderId: "96470295319",
-  appId: "1:96470295319:web:a87455db04f76b2b244d52"
+  apiKey: "AIzaSyAqDjKgguUESo7HWsQWceeZ8B7pRf-nupA",
+  authDomain: "ecommerce-4322e.firebaseapp.com",
+  projectId: "ecommerce-4322e",
+  storageBucket: "ecommerce-4322e.appspot.com",
+  messagingSenderId: "850409812947",
+  appId: "1:850409812947:web:5b5823aa9e0e3c05a4b526"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -133,8 +133,6 @@ export const FirebaseProvider = (props) => {
   }
 
   const plusAmount = async (product) => {
-    // const { amount, ProductId, category, description, email, imageURL, price, title } = product;
-    // const q = query(collection(db, "orders"), where("email" && "ProductId", "==", User.email && ProductId ));
     const {ProductId} = product
      await updateDoc( doc(db, `${User.email}/${ProductId}` ) , {
       amount: increment(1),
@@ -173,17 +171,12 @@ export const FirebaseProvider = (props) => {
   }
 
   const getProductsForCart = () => {
-    // const q = query(collection(db, "orders"), where("email", "==", User.email));
-    // console.log(q)
     onSnapshot(collection(db, `${User.email}`),(querySnapshot)=>{
-      // console.log(querySnapshot);
       const items = [];
       querySnapshot.forEach((doc)=>{
         items.push(doc.data());
-        // console.log(doc.data())
       })
       setCartItems(items);
-      // console.log(items);
     })
   };
 
@@ -192,10 +185,8 @@ export const FirebaseProvider = (props) => {
       const items = [];
       querySnapshot.docs.forEach((doc)=>{
         items.push(doc.data());
-        // console.log(doc.data())
       })
       setOrderItem(items);
-      // console.log(items)
     })
   }
 
@@ -238,16 +229,6 @@ export const FirebaseProvider = (props) => {
     await deleteDoc(doc(db, `orders/${User.email}`));
   }
 
-  const getItems = (product) =>{
-    // const {id} = product;
-    // onSnapshot(collection(db, "orders"),(querySnapshot)=>{
-    //   const items = [];
-    //   querySnapshot.forEach((doc)=>{
-    //     console.log(doc.data())
-    //   })
-    // })
-  }
-
   return (
     <FirebaseContext.Provider
       value={{
@@ -265,7 +246,6 @@ export const FirebaseProvider = (props) => {
         getProductById,
         removeProductFromCart,
         getDocument,
-        getItems,
         deleteAllDocsFromCart,
         getAllProducts,
         addProductsForOrder,
