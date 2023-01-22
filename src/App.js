@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import AdminPanel from './pages/AdminPanel';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import MyAccount from './pages/MyAccount';
 
 const App = () => {
   return(
@@ -23,6 +24,8 @@ const App = () => {
       <Route path='/admin' element={<AdminPanel/>} />
       <Route path='/cart' element={<Cart/>} />
       <Route path='/checkout' element={<Checkout/>} />
+      <Route path='/myaccount' element={<MyAccount/>} />
+      <Route path='/products' element={<AllProducts/>} />
     </Routes>
     <Sidebar/>
   </div>

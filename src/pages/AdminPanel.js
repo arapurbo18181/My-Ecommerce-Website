@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Orders from "../components/Orders";
 import { useFirebase } from "../contexts/FirebaseContext";
 
 const AdminPanel = () => {
@@ -10,31 +11,28 @@ const AdminPanel = () => {
   const [Category, setCategory] = useState();
   const [Image, setImage] = useState();
 
-  const { addProduct, User, tryProduct, getProducts } = useFirebase();
-
-  const [MyProduct, setMyProduct] = useState([]);
-
-  useEffect(() => {
-    getProducts().then((item) =>
-      setMyProduct(
-        item.docs.map((elem) => {
-          return elem.data();
-        })
-      )
-    );
-  }, []);
+  const {
+    addProduct,
+    User,
+    tryProduct,
+    MyProduct,
+    getProductsForOrders,
+    OrderItem,
+  } = useFirebase();
 
   const navigate = useNavigate();
+
+  const [Toggle, setToggle] = useState(false);
 
   const addNewItem = async (e) => {
     e.preventDefault();
 
     const result = MyProduct.find((item) => {
-      return item.id === parseInt(Id);
+      return item.ProductId === parseInt(Id);
     });
 
     if (result) {
-      if (result.id === parseInt(Id)) {
+      if (result.ProductId === parseInt(Id)) {
         alert("This ID is already used, please add new ID");
         setId("");
         console.log(Id);
@@ -57,20 +55,31 @@ const AdminPanel = () => {
     }
   }, [User, navigate]);
 
+  useEffect(() => {
+    getProductsForOrders();
+    if (OrderItem) {
+      setToggle(true);
+    }
+  }, []);
+
+  // console.log(OrderItem);
+
   return (
-    <section className="bg-[#f9fafb] w-screen h-screen flex justify-evenly items-center">
+    <section className="bg-[#f9fafb] w-screen h-screen flex flex-col lg:flex-row justify-evenly items-center">
+    <div className="h-[800px] overflow-y-auto flex flex-col space-x-6 lg:flex-row justify-evenly items-center">
+
+    
       <div className="w-[500px] h-[650px] bg-white drop-shadow-2xl rounded-lg mt-16">
         <div className="flex justify-center my-5 text-4xl font-bold">
           <h1>Orders</h1>
         </div>
-        <div className="px-10">
-          <ol
-            onClick={() => tryProduct()}
-            className="list-decimal cursor-pointer"
-          >
-            <h1>apurbo</h1>
-          </ol>
-        </div>
+        <ol className="px-10 list-decimal h-[500px] overflow-y-auto overflow-x-hidden">
+          {Toggle
+            ? OrderItem.map((item) => {
+                return <Orders {...item} />;
+              })
+            : "please add something"}
+        </ol>
       </div>
       <form
         onSubmit={addNewItem}
@@ -163,6 +172,7 @@ const AdminPanel = () => {
           </div>
         </div>
       </form>
+      </div>
     </section>
   );
 };

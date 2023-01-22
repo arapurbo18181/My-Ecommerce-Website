@@ -43,7 +43,7 @@ const Header = () => {
           <Link to={"/"}>
             <img className="w-[40px]" src={Logo} alt="" />
           </Link>
-          {User.email === "md.abdul.zabber.islam.apurbo@g.bracu.ac.bd" ? (
+          {User.email === "demo@gmail.com" ? (
             <Link className="font-bold" to={"/admin"}>
               Admin Dashboard
             </Link>

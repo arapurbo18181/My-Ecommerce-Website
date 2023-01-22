@@ -12,7 +12,7 @@ import { useState } from 'react';
 const Sidebar = () => {
   const {Cart, clearCart, Total, ItemAmount, Data, setData} = useCart();
   const {IsOpen,  handleClose} = useSidebar();
-  const {getProductsForCart, getProductById, getItems, CartItems, deleteAllDocs} = useFirebase();
+  const {getProductsForCart, getProductById, getItems, CartItems, deleteAllDocsFromCart} = useFirebase();
   const [Items, setItems] = useState([]);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const Sidebar = () => {
           <div className='uppercase font-semibold'>
             <span className='mr-2'> Total: </span> $ {parseFloat(Total).toFixed(2)}
           </div>
-          <div onClick={deleteAllDocs} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
+          <div onClick={deleteAllDocsFromCart} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
             <FiTrash2/>
           </div>
         </div>

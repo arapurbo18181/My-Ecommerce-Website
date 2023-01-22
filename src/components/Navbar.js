@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFirebase } from "../contexts/FirebaseContext";
 import { FaBars } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Navbar = () => {
   const { User, logOut } = useFirebase();
   const [ToggleMenu, setToggleMenu] = useState(false);
+  const navigate = useNavigate();
 
   const toggle = () => {
     setToggleMenu(!ToggleMenu);
@@ -19,11 +20,13 @@ const Navbar = () => {
   const logOutAndToggle = () => {
     logOut();
     toggle();
+    navigate("/");
     toast("You Are Logged Out");
   };
 
   const handleLogout = () => {
     logOut();
+    navigate("/");
     toast("You Are Logged Out");
   };
 
@@ -32,8 +35,10 @@ const Navbar = () => {
       <>
         <div className="gap-x-5 hidden lg:flex">
           <Link to={"/"}>Home</Link>
+          <Link to={"/products"}>All Products</Link>
+          <Link to={"/myaccount"}>My Account</Link>
           <button onClick={handleLogout}>Logout</button>
-          <div className="font-bold">Welcome, {User.displayName}</div>
+          <div className="font-bold">Welcome, {User.email}</div>
         </div>
         <div className="block lg:hidden">
           <FaBars onClick={toggle} className="text-2xl" />
@@ -54,6 +59,20 @@ const Navbar = () => {
             >
               Home
             </Link>
+            <Link
+              onClick={toggle}
+              className="border-b bg-white border-black pb-1"
+              to={"/products"}
+            >
+              All Products
+            </Link>
+            <Link
+              onClick={toggle}
+              className="border-b bg-white border-black pb-1"
+              to={"/myaccount"}
+            >
+              My Account
+            </Link>
             <button
               className="border-b border-black pb-1"
               onClick={logOutAndToggle}
@@ -69,6 +88,7 @@ const Navbar = () => {
       <>
         <div className="gap-x-5 hidden lg:flex">
           <Link to={"/"}>Home</Link>
+          <Link to={"/products"}>All Products</Link>
           <Link to={"/login"}>Login</Link>
           <Link to={"/signup"}>Sign Up</Link>
         </div>
@@ -90,6 +110,13 @@ const Navbar = () => {
               to={"/"}
             >
               Home
+            </Link>
+            <Link
+              onClick={toggle}
+              className="border-b border-black pb-1"
+              to={"/products"}
+            >
+              All Products
             </Link>
             <Link
               onClick={toggle}

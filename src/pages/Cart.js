@@ -2,16 +2,23 @@ import React, { useEffect } from "react";
 import CartItemForViewCart from "../components/CartItemForViewCart";
 import { useCart } from "../contexts/CartContext";
 import {FiTrash2} from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFirebase } from "../contexts/FirebaseContext";
 
 const Cart = () => {
   const { Cart, Total, clearCart } = useCart();
-  const {CartItems, getProductsForCart, deleteAllDocs} = useFirebase();
+  const {CartItems, getProductsForCart, deleteAllDocs, User} = useFirebase();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProductsForCart()
   },[]);
+  
+  useEffect(() => {
+    if (!User) {
+      navigate("/")
+    }
+  }, [])
 
   return (
     <section className="h-screen w-screen flex flex-col justify-center items-center">
