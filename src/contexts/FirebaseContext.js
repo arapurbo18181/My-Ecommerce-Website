@@ -35,12 +35,13 @@ const FirebaseContext = createContext();
 export const useFirebase = () => useContext(FirebaseContext);
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAqDjKgguUESo7HWsQWceeZ8B7pRf-nupA",
-  authDomain: "ecommerce-4322e.firebaseapp.com",
-  projectId: "ecommerce-4322e",
-  storageBucket: "ecommerce-4322e.appspot.com",
-  messagingSenderId: "850409812947",
-  appId: "1:850409812947:web:5b5823aa9e0e3c05a4b526"
+  apiKey: "AIzaSyDXsTG6hG356eKkQxISGrPVAD4SD3DR9D4",
+  authDomain: "ecommerce-30ffe.firebaseapp.com",
+  databaseURL: "https://ecommerce-30ffe-default-rtdb.firebaseio.com",
+  projectId: "ecommerce-30ffe",
+  storageBucket: "ecommerce-30ffe.appspot.com",
+  messagingSenderId: "860109325224",
+  appId: "1:860109325224:web:15578d623e1ddde5f0939d"
 };
 
 const app = initializeApp(firebaseConfig);
